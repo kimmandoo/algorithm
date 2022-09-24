@@ -1,4 +1,4 @@
-package usw_algo;
+package usw_algo.merge;
 
 import java.util.ArrayList;
 
