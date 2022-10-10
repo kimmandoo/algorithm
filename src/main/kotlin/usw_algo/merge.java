@@ -47,7 +47,7 @@ public class merge {
     }
 
     public static void main(String[] args) {
-        ArrayList<Integer> dataSet = new ArrayList<Integer>(Arrays.asList(31, 3, 65, 73, 8, 11, 20, 29, 48, 15));
+        ArrayList<Integer> dataSet = new ArrayList<Integer>(Arrays.asList(90,2,7,1,50,40, 21, 19, 3, 11));
         mergeSort(dataSet);
     }
 }
