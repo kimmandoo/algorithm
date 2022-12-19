@@ -1,8 +1,8 @@
-# kotlin-algorithm
+# algorithm_solved
 
 |분류|사용언어|
 |---|---|
-|lang|kotlin|
+|lang|kotlin, java|
 |||
 
 
