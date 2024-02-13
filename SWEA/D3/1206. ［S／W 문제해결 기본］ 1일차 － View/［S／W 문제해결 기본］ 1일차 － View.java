@@ -49,7 +49,8 @@ class Solution
 		   표준입력 System.in 으로부터 스캐너를 만들어 데이터를 읽어옵니다.
 		 */
 		Scanner sc = new Scanner(System.in);
-		int T = 10;
+		int T;
+		T=10;
 		/*
 		   여러 개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
 		*/
@@ -57,24 +58,21 @@ class Solution
 		for(int test_case = 1; test_case <= T; test_case++)
 		{
             int n = sc.nextInt();
-			int[] input = new int[n];
-			for(int i=0; i<n; i++){
-            	input[i] = sc.nextInt();
+			int[] b = new int[n];
+            for(int i=0; i<n; i++){
+                b[i] = sc.nextInt();
             }
-            // logic
-            int view = 0;
+            int res = 0;
             for(int i=2; i<n-2; i++){
-            	// 양 끝 2칸씩은 제외
-                // 앞 두칸 검사
-                int target = input[i];
-                int forward = Math.max(input[i+1],input[i+2]);
-                // 뒤 두칸 검사
-                int backward = Math.max(input[i-1],input[i-2]);
-                int total = Math.max(forward, backward);
-                if(target-total>0) view += target-total;
+             	int left = Math.max(b[i-1], b[i-2]);
+                int right = Math.max(b[i+1], b[i+2]);
+                int max = Math.max(left, right);
+                if(b[i]>max){
+                	res += b[i] - max;
+                }
             }
             
-            System.out.printf("#%d %d\n",test_case, view);
+            System.out.println("#"+test_case+" "+res );
 		}
 	}
 }
