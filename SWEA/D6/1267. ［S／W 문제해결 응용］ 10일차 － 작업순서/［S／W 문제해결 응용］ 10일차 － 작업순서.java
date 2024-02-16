@@ -1,17 +1,17 @@
 import java.util.Scanner;
 import java.io.FileInputStream;
-
 class Solution {
 	static int[] inbounds;
 	static int[] outbounds;
 	static int[][] map;
 	static boolean[] visited;
 	static int v, e;
+	static StringBuilder sb;
 
 	public static void dfs(int start) {
 		if (!visited[start]) {
 			visited[start] = true;
-			System.out.print(start + " ");
+			sb.append(start).append(" ");
 		}
 		for (int i = 1; i <= v; i++) {
 			if (map[start][i] == 1 && !visited[i]) {
@@ -50,14 +50,16 @@ class Solution {
 				inbounds[en]++;
 			}
 			// dfs를 돌건데, inbounds가 0인 정점을 찾아서 출력하고 outbounds인 간선 끊어 버리기. map[en][n] -> n개
-			System.out.print("#" + test_case + " ");
+			sb = new StringBuilder();
+			sb.append("#").append(test_case).append(" ");
 			for (int i = 1; i <= v; i++) {
 				if (!visited[i] && inbounds[i] == 0) {
 					// dfs 시작점 - 진입차수가 0 인 것
 					dfs(i);
 				}
 			}
-			System.out.print("\n");
+			sb.append("\n");
+			System.out.print(sb);
 
 		}
 	}
