@@ -1,44 +1,56 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
+import java.util.*;
 
-class Main {
-	static List<Integer>[] tree; 
-	
+public class Main {
+	static List<Integer>[] tree;
 	static int[] p;
 	static boolean[] v;
-	
-	public static void main(String args[]) throws Exception {
+/** 
+ * 두번째 풀이가 틀린이유
+ * 일단 양방향으로 처리하지않았음
+ * 부모 노드에 자식노드 추가할 때 자식노드도 부모노드를 추가하고 있어야됨. p는 부모노드값을 넣어둔 배열이다.
+ * 방문 배열도 만들어두고, 중복해서 재귀가 돌지 않도록 넣는다.
+ */
+	public static void treeBfs(int cur) {
+		v[cur] = true;
+		for (int i = 0; i < tree[cur].size(); i++) {
+			int child = tree[cur].get(i);
+			if (!v[child]) {
+				p[child] = cur; // cur이 child의 부모노드다.
+				treeBfs(child);
+			}
+		}
+//		if (tree[cur] == null) {
+//			// 자식 노드이자 leaf 노드라는 소리
+//			return;
+//		} else {
+//			System.out.println(cur);
+//			for (int i = 0; i < tree[cur].size(); i++) {
+//				treeBfs(tree[cur].get(i));
+//			}
+//		}
+	}
+
+	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int n = sc.nextInt();
-		tree = new ArrayList[n+1];
-		p = new int[n+1];
-		v = new boolean[n+1];
-		
-		for(int i=0; i<n+1; i++) {
-			tree[i] = new ArrayList<>();
+		tree = new ArrayList[n + 1]; // tree[1]부터 시작할 것.
+		p = new int[n + 1];
+		v = new boolean[n + 1];
+
+		for (int i = 1; i <= n; i++) {
+			tree[i] = new ArrayList<>(); // null 참조 안하게 일단 생성하기
 		}
-		for(int i=0; i<n-1; i++) {
-			int node1 = sc.nextInt();
-			int node2 = sc.nextInt();
-			tree[node1].add(node2);
-			tree[node2].add(node1);
+
+		for (int i = 1; i < n; i++) {
+			int parent = sc.nextInt();
+			int child = sc.nextInt();
+			tree[parent].add(child);
+			tree[child].add(parent); // 이걸 해야 자식 노드가 부모노드를 찾아간다. 
 		}
-		find(1); // 1이 루트니까 
+		treeBfs(1);
 		for(int i=2; i<=n; i++) {
-			System.out.println(p[i]);
-		}
-	}
-	
-	public static void find(int node) {
-		v[node] = true;
-		for(int i=0; i<tree[node].size(); i++) {
-			int child = tree[node].get(i);
-			if(!v[child]) {
-				 p[child] = node;
-				 find(child);
-			}
+			System.out.println(p[i]+" ");
 		}
 	}
 }
