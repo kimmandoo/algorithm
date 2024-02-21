@@ -67,6 +67,7 @@ class Solution {
 //		Scanner sc = new Scanner(System.in);
 		int T = 10;
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		s = new LinkedList();
 		for (int test_case = 1; test_case <= T; test_case++) {
 			int n = Integer.parseInt(br.readLine());
@@ -90,7 +91,10 @@ class Solution {
 				}
 			}
 			opTraversal(tree[1]);
-			System.out.println("#" + test_case + " " + tree[1].data);
+			StringBuilder sb = new StringBuilder();
+			sb.append("#").append(test_case).append(" ").append(tree[1].data).append("\n");
+			bw.write(sb.toString());
+			bw.flush();
 		}
 	}
 }
