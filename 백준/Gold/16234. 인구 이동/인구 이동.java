@@ -24,10 +24,11 @@ public class Main {
 		}
 		int move = 0;
 		// 입력받기 끝
-		boolean moved;
-        do {
-            moved = false;
-            for (int i = 0; i < N; i++) {
+		boolean moved = true;
+		
+		while(moved) {
+			moved = false;
+			for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
                     if (!v[i][j]) {
                         boolean union = false;
@@ -74,7 +75,8 @@ public class Main {
                 move++;
             }
             v = new boolean[N][N]; // 초기화
-        } while (moved);
+		}
+
         System.out.println(move);
 	}
 }
