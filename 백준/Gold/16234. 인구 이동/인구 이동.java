@@ -72,13 +72,6 @@ public class Main {
             }
             if (moved) {
                 move++;
-                sb.append("Move ").append(move).append(":\n");
-                for (int a = 0; a < N; a++) {
-                    for (int b = 0; b < N; b++) {
-                        sb.append(map[a][b]).append(" ");
-                    }
-                    sb.append("\n");
-                }
             }
             v = new boolean[N][N]; // 초기화
         } while (moved);
