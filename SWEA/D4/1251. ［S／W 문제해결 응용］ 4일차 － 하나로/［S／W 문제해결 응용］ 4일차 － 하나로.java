@@ -33,9 +33,10 @@ public class Solution {
 		int from, to;
 		double w;
 
-		Edge(int from, int to) {
+		Edge(int from, int to, double w) {
 			this.from = from;
 			this.to = to;
+			this.w = w;
 		}
 
 		void setWeight(double w) {
@@ -49,7 +50,7 @@ public class Solution {
 	}
 
 	public static void main(String[] args) throws Exception {
-		// System.setIn(new FileInputStream("res/input.txt"));
+		//System.setIn(new FileInputStream("res/input.txt"));
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int T;
 		T = Integer.parseInt(br.readLine());
@@ -71,23 +72,20 @@ public class Solution {
 				cor[i][0] = cx;
 				cor[i][1] = cy;
 			}
+			st = new StringTokenizer(br.readLine(), " ");
+			double energy = Double.parseDouble(st.nextToken());
 
 			// 이제 cor에는 모든 좌표가 저장되어 있음 -> 이거로 모든 간선 만들면 됨
 			for (int i = 0; i < n; i++) {
 				for (int j = i + 1; j < n; j++) {
-					e.add(new Edge(i, j));
-					e.add(new Edge(j, i));
+					
+					e.add(new Edge(i, j, w(energy, cor[i][0], cor[i][1], cor[j][0],
+							cor[j][1])));
+					e.add(new Edge(j, i,w(energy, cor[i][0], cor[i][1], cor[j][0],
+							cor[j][1])));
 				}
 			}
 			// 좌표로 준거로 모든 간선 생성
-			st = new StringTokenizer(br.readLine(), " ");
-			double energy = Double.parseDouble(st.nextToken());
-
-			// 이제 각 간선의 모든 가중치 저장
-			for (int i = 0; i < e.size(); i++) {
-				e.get(i).w = w(energy, cor[e.get(i).from][0], cor[e.get(i).from][1], cor[e.get(i).to][0],
-						cor[e.get(i).to][1]);
-			}
 
 			// 가중치 넣기 완료 -> 이제 오름차순 정렬하자
 			Collections.sort(e, new Comparator<Edge>() {
