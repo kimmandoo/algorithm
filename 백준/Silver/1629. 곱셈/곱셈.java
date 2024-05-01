@@ -2,30 +2,30 @@ import java.util.*;
 import java.io.*;
 
 class Main {
-	static int A, B, C;
+	static int mod;
 
 	public static void main(String[] args) throws Exception {
-		// System.setIn(new FileInputStream("res/input.txt"));
+		//System.setIn(new FileInputStream("res/input.txt"));
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-		A = Integer.parseInt(st.nextToken());
-		B = Integer.parseInt(st.nextToken());
-		C = Integer.parseInt(st.nextToken());
-
-		System.out.println(pow(A, B));
+		int a = Integer.parseInt(st.nextToken());
+		int b = Integer.parseInt(st.nextToken());
+		mod = Integer.parseInt(st.nextToken());
+		// a를 b번 곱한수를 구해야되는데, 매번 c로 나눈 나머지를 남기면서 가면 됨 (오버플로 주의)
+		System.out.println(exp(a, b));
 	}
 
-    public static long pow(long A, long exponent) {
-
-        if (exponent == 1) {
-			return A % C;
+	public static long exp(int x, int n) {
+		if (n == 1)
+			return x % mod;
+		if (n % 2 == 0) {
+			long y = exp(x, n / 2);
+			return (y * y) % mod;
 		}
-
-        long temp = pow(A, exponent / 2);
-
-		if (exponent % 2 == 1) {
-			return (temp * temp % C) * A % C;
+		if (n % 2 == 1) {
+			long y = exp(x, (n - 1) / 2);
+			return ((y * y)% mod * x)% mod;
 		}
-		return temp * temp % C;
+		return x % mod;
 	}
 }
