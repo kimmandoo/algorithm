@@ -3,21 +3,18 @@ import java.util.*;
 class Solution {
     public int solution(int[] citations) {
         int answer = 0;
-        ArrayList<Integer> arr = new ArrayList();
-        for(int c: citations){
-            arr.add(c);
-        }
-        arr.sort(Collections.reverseOrder());
-
+        Arrays.sort(citations);
         int len = citations.length;
         for(int i=0; i<len; i++){
-            int tmpH = arr.get(i);
-            if (tmpH < i + 1) {
-                break;
-            } else {
-                answer = i + 1;
+            int tmpH = citations[i];
+            // 현재 위치 포함해서 남은 논문 편 수
+            int left = len - i;
+            if(tmpH <= left){
+                answer = tmpH;
             }
         }
+        
+        
             
         return answer;
     }
