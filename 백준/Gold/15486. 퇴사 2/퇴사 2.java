@@ -20,16 +20,13 @@ public class Main {
         }
         
         dp = new int[n + 1];
-        for (int i = n - 1; i >= 0; i--) {
+        for (int i = 0; i < n; i++) {
+            dp[i + 1] = Math.max(dp[i + 1], dp[i]);
             int next = i + input[i][0];
-            if (next > n) {
-                dp[i] = dp[i + 1];
-            } else if (next == n) {
-                dp[i] = Math.max(input[i][1], dp[i + 1]);
-            } else {
-                dp[i] = Math.max(input[i][1] + dp[next], dp[i + 1]);
+            if (next <= n) {
+                dp[next] = Math.max(dp[next], dp[i] + input[i][1]);
             }
         }
-        System.out.println(dp[0]);
+        System.out.println(dp[n]);
     }
 }
