@@ -1,51 +1,54 @@
 import java.util.*;
+import java.io.*;
 
-class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
-		int m = sc.nextInt();
-		char map[][] = new char[n][m];
-		char[][] sol1 = new char[8][8]; // sol1, sol2의 크기를 8x8로 수정
-		char[][] sol2 = new char[8][8];
-		char[] wb = new char[] { 'W', 'B' };
-		char[] bw = new char[] { 'B', 'W' };
-		for (int i = 0; i < n; i++) {
-			String input = sc.next();
-			for (int j = 0; j < m; j++) {
-				map[i][j] = input.charAt(j);
-			}
-		}
+public class Main {
+    static int n;
+    static int m;
+    static char[][] b;
+    public static char[] wb;
+    public static char[] bw;
+    static int cnt = Integer.MAX_VALUE;
 
-		int s1 = Integer.MAX_VALUE; // 충분히 큰 값으로 초기화
-		int s2 = Integer.MAX_VALUE;
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				sol1[i][j] = wb[(i + j) % 2];
-				sol2[i][j] = bw[(i + j) % 2];
-			}
-		}
+    public static void main(String[] args) throws Exception {
+        // System.setIn(new FileInputStream("res/input.txt"));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        b = new char[n][m];
+        wb = new char[]{'W', 'B'};
+        bw = new char[]{'B', 'W'};
+        for (int i = 0; i < n; i++) {
+            String line = br.readLine();
+            for (int j = 0; j < m; j++) {
+                b[i][j] = line.charAt(j);
+            }
+        }
+        // 입력받기 끝
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                cnt = Math.min(cnt, go(i, j));
+            }
+        }
+        System.out.println(cnt);
+    }
 
-		for (int i = 0; i <= n - 8; i++) { // n - 8로 수정
-			for (int j = 0; j <= m - 8; j++) { // m - 8로 수정
-				// 시작 지점부터 8x8 체크하기
-				int tmp1 = 0;
-				int tmp2 = 0;
-				for (int k = i; k < i + 8; k++) {
-					for (int l = j; l < j + 8; l++) {
-						if (sol1[k - i][l - j] != map[k][l]) {
-							tmp1++;
-						}
-						if (sol2[k - i][l - j] != map[k][l]) {
-							tmp2++;
-						}
-					}
-				}
-				s1 = Math.min(tmp1, s1);
-				s2 = Math.min(tmp2, s2);
-			}
-		}
+    public static int go(int ci, int cj) { // 둘 수 있는 경우의 수
+        // 한 칸 씩 돌면서 8x8을 비교할 것
+        if (ci + 8 > n || cj + 8 > m) return Integer.MAX_VALUE; // 범위를 벗어나면 그냥 안돌림
 
-		System.out.println(Math.min(s1, s2)); // 두 값 중 최소값 출력
-	}
+        int cntWB = 0;
+        int cntBW = 0;
+        for (int i = ci; i < ci + 8; i++) {
+            for (int j = cj; j < cj + 8; j++) {
+                if (wb[(i + j) % 2] != b[i][j]) {
+                    cntWB++;
+                }
+                if (bw[(i + j) % 2] != b[i][j]) {
+                    cntBW++;
+                }
+            }
+        }
+        return Math.min(cntBW, cntWB);
+    }
 }
