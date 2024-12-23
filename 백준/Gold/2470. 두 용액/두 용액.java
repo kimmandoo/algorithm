@@ -1,55 +1,56 @@
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class Main {
+    static int n, s;
     static int[] input;
-    public static int bi(int s, int e, int target){
-        int min = input[s];
-        int minAbs = Math.abs(target + min);
-        int l = s+1; int r = e; // 고른 건 빼야되니까
-        while (l<=r){
-            int m = (l+r)/2;
-            int sum = target + input[m];
-            int sumAbs = Math.abs(sum);// 이제 이게 이분탐색 기준점이 됨
-            if(sumAbs < minAbs){ // 더 작은 거로 이동해야 0에 가까워진다.
-                min = input[m];
-                minAbs = sumAbs;
-            }
-            if(sum<0){ // sum이 음수면 왼쪽을 볼 필요가 없다.
-                l = m+1;
-            }else if (sum >0){
-                r = m-1; // sum이 양수면 오른쪽을 볼 필요가 없다.
-            }else{
-                return input[m];
-            }
-        }
-        return min;
-    }
 
     public static void main(String[] args) throws Exception {
-//        Scanner sc = new Scanner(System.in);
+        // System.setIn(new FileInputStream("res/input.txt"));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        n = Integer.parseInt(st.nextToken());
         input = new int[n];
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        for(int i=0; i<n; i++){
+        st = new StringTokenizer(br.readLine(), " ");
+        for (int i = 0; i < n; i++) {
             input[i] = Integer.parseInt(st.nextToken());
         }
-        Arrays.sort(input);
-        int ansAbs = Math.abs(input[0]+input[1]);
-        int ans1 = input[0];
-        int ans2 = input[1];
-        for(int i=0; i<n-1; i++){
-            int min = bi(i+1,n-1, input[i]);
-            int sumAbs = Math.abs(min+input[i]);
-            if(ansAbs > sumAbs){
-                ansAbs = sumAbs;
-                ans1 = input[i];
-                ans2 = min;
+        Arrays.sort(input); // 오름차순 정렬
+        go();
+    }
+
+    public static void go() {
+        // 0에 가장 가까운 용액을 만들어내는 두 용액의 특성값
+        // -99 -2 -1 4 98
+        // l이 처음, r이 마지막 끝 잡기.
+        // 합이 0에 가까운게 min값인데, 그 때의 두 용액을 들고 있어야한다.
+        int l = 0;
+        int r = n - 1;
+        int ll = -1;
+        int rr = -1;
+        int min = Integer.MAX_VALUE;
+        while (l < r) {
+            // 정렬을 해놨으니까, 왼쪽은 작은거, 오른쪽은 큰 게 있다.
+            // 작아지려면 왼쪽을 더하고, 커지려면 오른쪽을 빼면 됨(인덱스)
+            int tmp = input[l] + input[r];
+            if (Math.abs(tmp) < Math.abs(min)) {
+                min = tmp;
+                ll = input[l];
+                rr = input[r];
+            }
+            if (tmp < 0) { // 음수일 경우에는 더 큰 값을 만들기 위해 음수 값을 줄여야하고
+                l++;
+            } else if (tmp > 0) { // 양수면 더 작은 값을 만들기 위해 양수 값을 줄여야한다.
+                r--;
+            } else {
+                // 0이면
+                break;
             }
         }
-        System.out.println(ans1+" "+ans2);
-
+        System.out.println(ll + " " + rr);
     }
 }
