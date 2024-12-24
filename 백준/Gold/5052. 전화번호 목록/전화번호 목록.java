@@ -5,9 +5,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.StringTokenizer;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public class Main {
@@ -37,12 +34,8 @@ public class Main {
                 node.child.putIfAbsent(c, new Node());
                 node = node.child.get(c);
 
-                // 만약 현재 노드가 단어의 끝이라면 (이미 등록된 번호가 현재 번호의 접두사임)
                 if (node.endOfWord) return false;
-
-                // 마지막 문자에 도달한 경우 단어 끝 표시
                 if (i == str.length() - 1) {
-                    // 자식 노드가 있으면 다른 번호의 접두사임
                     if (!node.child.isEmpty()) return false;
                     node.endOfWord = true;
                 }
