@@ -66,7 +66,7 @@ public class Main {
     }
 
     public static void go() {
-        LinkedList<Node> pq = new LinkedList<>();
+        ArrayDeque<Node> pq = new ArrayDeque<>();
 //        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> {
 //            return o1.t - o2.t;
 //        });
