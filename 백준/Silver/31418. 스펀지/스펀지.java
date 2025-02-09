@@ -33,8 +33,8 @@ public class Main {
     }
 
     public static void go(long x, long y) {
-        long wCase = (Math.min(w, x + t) - Math.max(1, x - t) + 1) % mod;
-        long hCase = (Math.min(h, y + t) - Math.max(1, y - t) + 1) % mod;
+        long wCase = (Math.min(w, x + t) - Math.max(1, x - t) + 1);
+        long hCase = (Math.min(h, y + t) - Math.max(1, y - t) + 1);
 
         ans = (ans * wCase) % mod;
         ans = (ans * hCase) % mod;
