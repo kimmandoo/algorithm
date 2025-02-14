@@ -18,12 +18,11 @@ public class Main {
         long res = 0;
         long mod = 1234567891;
         long r = 31;
-        for (int i = 0; i < n; i++) {
-            int a = input.charAt(i) - 'a' + 1;
-            long t = (long) a * (long) Math.pow(r, i);
-//            System.out.println(a+", " + t);
-            res = (res + t) %mod;
+        long pow = 1;
+        for(int i = 0; i < n; i++) {
+            res += ((input.charAt(i) - 96) * pow);
+            pow = (pow * r) % mod;
         }
-        System.out.println(res);
+        System.out.println(res % mod);
     }
 }
