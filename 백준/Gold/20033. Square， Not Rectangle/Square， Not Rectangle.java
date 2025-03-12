@@ -45,6 +45,7 @@ public class Main {
                 cnt++;
             }else{
                 // 이게 아니면
+                if (n - i + 1 < size) return false;
                 cnt = 0;
             }
         }
