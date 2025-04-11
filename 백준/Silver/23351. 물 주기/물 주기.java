@@ -19,7 +19,6 @@ public class Main {
     public static void go() {
         int[] p = new int[n];
         Arrays.fill(p, k);
-        int res = 0;
         int time = 1;
         while (p[0] >= time) {
             for (int i = 0; i < a; i++) { // 연속된 a개에 b만큼 물주기
@@ -27,8 +26,7 @@ public class Main {
             }
             time++;
             Arrays.sort(p);
-            res++;
         }
-        System.out.println(res);
+        System.out.println(time - 1);
     }
 }
