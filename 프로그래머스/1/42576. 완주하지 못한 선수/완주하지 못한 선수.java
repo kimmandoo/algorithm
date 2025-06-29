@@ -1,26 +1,19 @@
 import java.util.*;
 
 class Solution {
-    public String solution(String[] participant, String[] completion) {
-        String answer = "";
-        TreeMap<String, Integer> tm = new TreeMap();
-        for(String name: participant){
-            tm.put(name, tm.getOrDefault(name, 0)+1);
-        } // 트리맵에 저장해두기 -> 굳이 TreeMap일 필요없음
-        // 이제 completion을 돌면서 처리하자
-        for(String name: completion){
-            tm.put(name, tm.get(name)-1);
-        } // 0이면 완주했다는 의미가 될 것
+    public String solution(String[] p, String[] c) {
+        // 참가자 수는 10만 이하
+        // p보다 c가 작음
+        // 한 명 빼고는 모두 완주했음
+        Arrays.sort(p);
+        Arrays.sort(c);
         
-        Iterator<String> keys = tm.keySet().iterator();
-        while(keys.hasNext()){
-            String key = keys.next();
-            if(tm.get(key) != 0){
-                answer = key;
-                break;
+        for(int i=0; i<c.length; i++){
+            if(!p[i].equals(c[i])){
+                return p[i];
             }
         }
         
-        return answer;
+        return p[c.length];
     }
 }
