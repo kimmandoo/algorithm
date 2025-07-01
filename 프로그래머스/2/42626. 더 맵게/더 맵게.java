@@ -1,25 +1,22 @@
 import java.util.*;
 
 class Solution {
-    public int solution(int[] scoville, int K) {
-        int answer = 0;
-        PriorityQueue<Integer> pq = new PriorityQueue();
-        for(int i: scoville){
-            pq.add(i);
-        } // 기본이 min heap
-        while(pq.peek()<K){
-            if(pq.size()>=2){
-                int easy = pq.poll();
-                int eeasy = pq.poll();
-                pq.add(easy + (2*eeasy)); // 새 음식 만들어서 추가
-                answer++;
-            }else{
-                answer = -1;
-                break;
-            }
-            if(pq.peek() >= K) break;
+    public int solution(int[] sv, int k) {        
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for(int s: sv){
+            pq.offer(s);
+        } // init
+        
+        int cnt = 0;
+        if(pq.peek() >= k) return 0;
+        while(pq.peek() < k && pq.size() > 1){
+            int a = pq.poll();
+            int b = pq.poll();
+            pq.offer(a+b*2);
+            cnt++;
         }
         
-        return answer;
+        if(pq.peek() < k) return -1;
+        return cnt;
     }
 }
