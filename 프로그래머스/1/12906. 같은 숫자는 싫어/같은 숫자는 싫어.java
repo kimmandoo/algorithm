@@ -2,24 +2,23 @@ import java.util.*;
 
 public class Solution {
     public int[] solution(int []arr) {
-        LinkedList<Integer> s = new LinkedList();
-        ArrayList<Integer> a = new ArrayList();
-        for(int i: arr){
-            if(s.size()>0 && s.peek() != i){
-                a.add(s.pop());
-                s.push(i);
+        
+        ArrayDeque<Integer> dq = new ArrayDeque<>();
+        for(int k: arr){
+            if(dq.isEmpty()){
+                dq.addLast(k);
             }else{
-                s.push(i);
+                if(dq.peekLast() == k) continue;
+                dq.addLast(k);
             }
         }
-        a.add(s.pop());
-
-        int[] answer = new int[a.size()];
-        int idx =0 ;
-        for(Integer i: a){
-            answer[idx++] = i;
+        
+        int[] ans = new int[dq.size()];
+        
+        for(int i=0; i<ans.length; i++){
+            ans[i] = dq.removeFirst();
         }
-
-        return answer;
+        
+        return ans;
     }
 }
