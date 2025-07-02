@@ -1,10 +1,10 @@
 # [level 1] K번째수 - 42748 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42748?language=java) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42748) 
 
 ### 성능 요약
 
-메모리: 72.5 MB, 시간: 0.35 ms
+메모리: 87.8 MB, 시간: 0.09 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 08월 28일 09:35:59
+2025년 07월 02일 21:21:03
 
 ### 문제 설명
 

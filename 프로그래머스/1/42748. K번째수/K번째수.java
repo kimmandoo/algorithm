@@ -2,22 +2,17 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] array, int[][] commands) {
-        int[] answer = new int[commands.length];
         ArrayList<Integer> arr = new ArrayList();
-        for(int[] comm: commands){
-            int s = comm[0]-1; // 0번째 부터 시작
-            int e = comm[1]; // n-1까지
-            ArrayList<Integer> sorted = new ArrayList();
-            for(int i=s; i<e;i++){
-                sorted.add(array[i]);
-            }
-            Collections.sort(sorted);
-            
-            arr.add(sorted.get(comm[2]-1));
-        }
+        int[] answer = new int[commands.length];
         int idx = 0;
-        for(int i: arr){
-            answer[idx++] = i;
+        for(int[] cmd: commands){
+            // 정렬된 i부터 j번째 사이의 k번째 수
+            for(int i=cmd[0]-1; i<cmd[1]; i++){
+                arr.add(array[i]);
+            }
+            Collections.sort(arr);
+            answer[idx++] = arr.get(cmd[2]-1);
+            arr.clear();
         }
         
         return answer;
