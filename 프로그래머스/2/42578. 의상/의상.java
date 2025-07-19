@@ -12,6 +12,6 @@ class Solution {
             answer *= (entry.getValue()+1);
         }
         
-        return answer-1;
+        return answer-1; // 공집합은 없다
     }
 }
