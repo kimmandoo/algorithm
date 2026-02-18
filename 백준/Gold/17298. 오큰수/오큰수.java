@@ -1,30 +1,52 @@
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.*;
-import java.io.*;
 
 public class Main {
+    static int n;
+    static int[] arr;
+    static StringBuilder sb = new StringBuilder();
+
     public static void main(String[] args) throws Exception {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[] input = new int[n];
+        // System.setIn(new FileInputStream("res/boj.txt"));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        n = Integer.parseInt(st.nextToken());
+        arr = new int[n + 1];
+        st = new StringTokenizer(br.readLine(), " ");
         for (int i = 0; i < n; i++) {
-            input[i] = sc.nextInt();
+            arr[i] = Integer.parseInt(st.nextToken());
         }
-        Stack<Integer> s = new Stack<>();
+        arr[n] = -1;
 
-        for(int i=0;i<n; i++){
-            while(!s.empty() && input[s.peek()] < input[i]) {
-                input[s.pop()] = input[i];
+        go();
+    }
+
+    static Deque<Integer> dq = new ArrayDeque<>();
+
+    public static void go() {
+        int[] ans = new int[n];
+
+        for (int i = n - 1; i >= 0; i--) {
+            int cur = arr[i];
+
+            // cur보다 작거나 같은 애들은 오큰수가 될 수 없음
+            while (!dq.isEmpty() && dq.peek() <= cur) {
+                dq.pop();
             }
-            s.push(i);
-        }
-        while (!s.isEmpty()) {
-            input[s.pop()] = -1;
-        }
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < n; i++) {
-            sb.append(input[i]).append(' ');
+
+            if (dq.isEmpty()) ans[i] = -1;
+            else {
+                ans[i] = dq.peek();
+            }
+
+            dq.push(cur);
         }
 
+        for (int i = 0; i < n; i++) {
+            sb.append(ans[i]).append(' ');
+        }
         System.out.println(sb);
     }
 }
