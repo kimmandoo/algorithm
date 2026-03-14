@@ -1,58 +1,71 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Array;
+import java.io.*;
 import java.util.*;
 
 public class Main {
     static int n, m, l, k;
-    static StringBuilder sb = new StringBuilder();
-    static int[] xp;
-    static int[] yp;
+    static Node[] arr;
+
+    static class Node {
+        int x, y;
+
+        Node(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
 
     public static void main(String[] args) throws Exception {
         // System.setIn(new FileInputStream("res/boj.txt"));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
         l = Integer.parseInt(st.nextToken());
         k = Integer.parseInt(st.nextToken());
-        xp = new int[k];
-        yp = new int[k];
+
+        arr = new Node[k];
         for (int i = 0; i < k; i++) {
             st = new StringTokenizer(br.readLine(), " ");
             int x = Integer.parseInt(st.nextToken());
             int y = Integer.parseInt(st.nextToken());
-            xp[i] = x;
-            yp[i] = y;
+            arr[i] = new Node(x, y);
         }
+
         go();
-//        System.out.println(sb);
     }
 
     public static void go() {
-        int mx = 0;
+        Arrays.sort(arr, (a, b) -> {
+            if (a.x == b.x) return a.y - b.y;
+            return a.x - b.x;
+        });
+
+        int max = 0;
 
         for (int i = 0; i < k; i++) {
-            for (int j = 0; j < k; j++) {
-                // 좌표 완탐
-                int startX = xp[i];
-                int startY = yp[j];
+            int sx = arr[i].x;
 
+            for (int j = 0; j < k; j++) {
+                int sy = arr[j].y;
                 int cnt = 0;
+
                 for (int t = 0; t < k; t++) {
-                    boolean xc = startX <= xp[t] && xp[t] <= startX + l;
-                    boolean yc = startY <= yp[t] && yp[t] <= startY + l;
-                    if (xc && yc) {
+                    int x = arr[t].x;
+                    int y = arr[t].y;
+
+                    if (x < sx) continue;
+                    if (x > sx + l) break;
+
+                    if (sy <= y && y <= sy + l) {
                         cnt++;
                     }
                 }
 
-                mx = Math.max(mx, cnt);
+                max = Math.max(max, cnt);
             }
         }
 
-        System.out.println(k - mx);
+        System.out.println(k - max);
     }
 }
