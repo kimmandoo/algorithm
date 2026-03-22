@@ -1,24 +1,42 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
+    static int n;
+    static int mx = -1;
+    static long[] memo;
+    static final long MOD = 1_000_000_009L;
 
     public static void main(String[] args) throws Exception {
-        Scanner sc = new Scanner(System.in);
-        int tc = sc.nextInt();
-    	long[] dp = new long[1000_002];
-    	dp[1] = 1;
-        dp[2] = 2;
-        dp[3] = 4; //111 12 21 3
+        // System.setIn(new FileInputStream("res/boj.txt"));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        for(int i=4; i<=1000001; i++) {
-        	dp[i] = (dp[i-1]+dp[i-2]+dp[i-3])%1_000_000_009;
+        n = Integer.parseInt(br.readLine());
+
+        int[] input = new int[n];
+        for (int i = 0; i < n; i++) {
+            int target = Integer.parseInt(br.readLine());
+            input[i] = target;
+            mx = Math.max(mx, target);
         }
 
-        for(int t=0; t<tc;t++) {
-        	int n = sc.nextInt();
-            
-            System.out.println(dp[n]);
+        memo = new long[mx + 1];
+        Arrays.fill(memo, -1);
+
+        StringBuilder sb = new StringBuilder();
+        for (int e : input) {
+            sb.append(go(e)).append('\n');
         }
+        System.out.print(sb);
+    }
+
+    static long go(int x) {
+        if (x == 0) return 1;
+        if (x < 0) return 0;
+
+        if (memo[x] != -1) return memo[x];
+
+        memo[x] = (go(x - 1) + go(x - 2) + go(x - 3)) % MOD;
+        return memo[x];
     }
 }
